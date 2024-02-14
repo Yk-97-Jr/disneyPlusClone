@@ -6,34 +6,27 @@ import Recommends from "./Recommends";
 import Trending from "./Trending";
 import Viewers from "./Viewers";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-
+import { useDispatch } from "react-redux";
 
 import { getCategoriesAndDocuments } from "../firebase"; // Import your function to fetch data
 import { setCategoriesAndDocuments } from "../features/movie/movieSlice";
 
-
-
 const Home = (props) => {
- const dispatch = useDispatch();
- const { recommend, newDisney, original, trending } = useSelector(
-   (state) => state.movie
- );
+  const dispatch = useDispatch();
 
- useEffect(() => {
-   const fetchData = async () => {
-     try {
-       const categoryMap = await getCategoriesAndDocuments();
-       // Dispatch the action to update the Redux store with fetched data
-       dispatch(setCategoriesAndDocuments(categoryMap));
-     } catch (error) {
-       console.error("Error fetching data:", error);
-     }
-   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoryMap = await getCategoriesAndDocuments();
+        // Dispatch the action to update the Redux store with fetched data
+        dispatch(setCategoriesAndDocuments(categoryMap));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-   fetchData();
- }, [dispatch]);
+    fetchData();
+  }, [dispatch]);
 
   /*   useEffect(() => {
     console.log("hello");
