@@ -2,17 +2,26 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectRecommend } from "../features/movie/movieSlice";
+import { useEffect } from "react";
+import { getCategoriesAndDocuments } from "../firebase";
 
 const Recommends = (props) => {
-  const movies = useSelector(selectRecommend);
-  console.log(movies, ":🛢️");
+    useEffect(() => {
+      const getCategoriesMap = async () => {
+        const categoryMap = await getCategoriesAndDocuments();
+        console.log(categoryMap);
+      };
+      getCategoriesMap();
+    }, []);
+  const movie = useSelector(selectRecommend);
+  console.log(movie, ":🛢️");
 
   return (
     <Container>
       <h4>Recommended for You</h4>
       <Content>
-        {movies &&
-          movies.map((movie, key) => (
+        {movie &&
+          movie.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
               <Link to={`/detail/` + movie.id}>

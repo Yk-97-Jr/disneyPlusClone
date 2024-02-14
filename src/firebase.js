@@ -5,7 +5,6 @@ import { getAuth } from "firebase/auth"; // Import getAuth to get the auth insta
 import { getStorage } from "firebase/storage";
 import firebase from "firebase/app";
 import {
-
   doc,
   getDoc,
   setDoc,
@@ -13,8 +12,7 @@ import {
   writeBatch,
   query,
   getDocs,
-} from "firebase/firestore";
-import { batch } from "react-redux";
+} from "firebase/firestore/lite";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAAEtgD-g5zes_kehLxlUYwIPo57DjybYE",
@@ -31,16 +29,33 @@ const auth = getAuth(firebaseApp); // Use getAuth to get the auth instance
 const provider = new GoogleAuthProvider();
 const storage = getStorage();
 
-export const addCollection = async (collectionKey, objToAdd) => {
-    const  collectionRef = collection(db,collectionKey);
-    const batch = writeBatch(db);
-    objToAdd.forEach((object) => {
-      const docRef = doc(collectionRef)
-    })
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
 
-}
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.tit);
+    batch.set(docRef, object);
+  });
 
+  await batch.commit();
+  console.log("done");
+};
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "collections");
+  const q = query(collectionRef);
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { tit, movies } = docSnapshot.data();
+    acc[tit] = movies;
+    return acc;
+  }, {});
 
+  return categoryMap;
+};
 
 export { auth, provider, storage };
 export default db;

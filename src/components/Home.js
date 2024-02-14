@@ -7,9 +7,14 @@ import Trending from "./Trending";
 import Viewers from "./Viewers";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import db from "../firebase";
+import db, {
+  addCollectionAndDocuments,
+  getCategoriesAndDocuments,
+} from "../firebase";
 import { setMovies } from "../features/movie/movieSlice";
 import { selectUserName } from "../features/user/userSlice";
+
+import data from "../disneyPlusMoviesData";
 
 const Home = (props) => {
   const dispatch = useDispatch();
@@ -19,7 +24,15 @@ const Home = (props) => {
   let originals = [];
   let trending = [];
 
-/*   useEffect(() => {
+  useEffect(() => {
+    const getCategoriesMap = async () => {
+      const categoryMap = await getCategoriesAndDocuments();
+      console.log(categoryMap);
+    };
+    getCategoriesMap();
+  }, []);
+
+  /*   useEffect(() => {
     console.log("hello");
     db.collection("movies").onSnapshot((snapshot) => {
       snapshot.docs.map((doc) => {
