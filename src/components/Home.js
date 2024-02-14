@@ -7,30 +7,33 @@ import Trending from "./Trending";
 import Viewers from "./Viewers";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import db, {
-  addCollectionAndDocuments,
-  getCategoriesAndDocuments,
-} from "../firebase";
-import { setMovies } from "../features/movie/movieSlice";
-import { selectUserName } from "../features/user/userSlice";
 
-import data from "../disneyPlusMoviesData";
+
+
+import { getCategoriesAndDocuments } from "../firebase"; // Import your function to fetch data
+import { setCategoriesAndDocuments } from "../features/movie/movieSlice";
+
+
 
 const Home = (props) => {
-  const dispatch = useDispatch();
-  const userName = useSelector(selectUserName);
-  let recommends = [];
-  let newDisneys = [];
-  let originals = [];
-  let trending = [];
+ const dispatch = useDispatch();
+ const { recommend, newDisney, original, trending } = useSelector(
+   (state) => state.movie
+ );
 
-  useEffect(() => {
-    const getCategoriesMap = async () => {
-      const categoryMap = await getCategoriesAndDocuments();
-      console.log(categoryMap);
-    };
-    getCategoriesMap();
-  }, []);
+ useEffect(() => {
+   const fetchData = async () => {
+     try {
+       const categoryMap = await getCategoriesAndDocuments();
+       // Dispatch the action to update the Redux store with fetched data
+       dispatch(setCategoriesAndDocuments(categoryMap));
+     } catch (error) {
+       console.error("Error fetching data:", error);
+     }
+   };
+
+   fetchData();
+ }, [dispatch]);
 
   /*   useEffect(() => {
     console.log("hello");

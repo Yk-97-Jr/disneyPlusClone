@@ -9,12 +9,11 @@ const Recommends = (props) => {
     useEffect(() => {
       const getCategoriesMap = async () => {
         const categoryMap = await getCategoriesAndDocuments();
-        console.log(categoryMap);
+      
       };
       getCategoriesMap();
     }, []);
   const movie = useSelector(selectRecommend);
-  console.log(movie, ":🛢️");
 
   return (
     <Container>
