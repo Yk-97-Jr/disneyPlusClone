@@ -4,16 +4,15 @@ import styled from "styled-components";
 import db from "../firebase";
 import { collection, doc, getDoc } from "firebase/firestore/lite";
 
-const Detail = ({iD}) => {
-  const { tit } = useParams();
+const Detail = () => {
+  const { id } = useParams();
   const [detailData, setDetailData] = useState({});
+  const [selectedMovieIndex, setSelectedMovieIndex] = useState(1);
 
   useEffect(() => {
-    console.log("id 🔥", iD);
     const fetchData = async () => {
       try {
-        const docRef = doc(db, "collections", tit);
-        console.log("document in Firebase 🔥", docRef);
+        const docRef = doc(db, "collections", id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -27,40 +26,58 @@ const Detail = ({iD}) => {
     };
 
     fetchData();
-  }, [tit]);
+  }, [id, setDetailData]); // Added setDetailData as a dependency
+
+  // Logging detailData inside the component
+  console.log("detail Data in use effect  🔥 ", detailData);
 
   return (
     <Container>
-      <Background>
-        <img alt={detailData.title} src={detailData.backgroundImg} />
-      </Background>
+      {detailData.movies && detailData.movies.length > 0 && (
+        
+        <>
+          <Background>
+            <img
+              alt={detailData.movies[selectedMovieIndex].title}
+              src={detailData.movies[selectedMovieIndex].backgroundImg}
+            />
+          </Background>
 
-      <ImageTitle>
-        <img alt={detailData.title} src={detailData.titleImg} />
-      </ImageTitle>
-      <ContentMeta>
-        <Controls>
-          <Player>
-            <img src="/images/play-icon-black.png" alt="" />
-            <span>Play</span>
-          </Player>
-          <Trailer>
-            <img src="/images/play-icon-white.png" alt="" />
-            <span>Trailer</span>
-          </Trailer>
-          <AddList>
-            <span />
-            <span />
-          </AddList>
-          <GroupWatch>
-            <div>
-              <img src="/images/group-icon.png" alt="" />
-            </div>
-          </GroupWatch>
-        </Controls>
-        <SubTitle>{detailData.subTitle}</SubTitle>
-        <Description>{detailData.description}</Description>
-      </ContentMeta>
+          <ImageTitle>
+            <img
+              alt={detailData.movies[selectedMovieIndex].title}
+              src={detailData.movies[selectedMovieIndex].titleImg}
+            />
+          </ImageTitle>
+          <ContentMeta>
+            <Controls>
+              <Player>
+                <img src="/images/play-icon-black.png" alt="" />
+                <span>Play</span>
+              </Player>
+              <Trailer>
+                <img src="/images/play-icon-white.png" alt="" />
+                <span>Trailer</span>
+              </Trailer>
+              <AddList>
+                <span />
+                <span />
+              </AddList>
+              <GroupWatch>
+                <div>
+                  <img src="/images/group-icon.png" alt="" />
+                </div>
+              </GroupWatch>
+            </Controls>
+            <SubTitle>
+              {detailData.movies[selectedMovieIndex].subTitle}
+            </SubTitle>
+            <Description>
+              {detailData.movies[selectedMovieIndex].description}
+            </Description>
+          </ContentMeta>
+        </>
+      )}
     </Container>
   );
 };
