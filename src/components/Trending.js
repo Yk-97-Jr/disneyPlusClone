@@ -14,7 +14,7 @@ const Trending = (props) => {
           movies.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
-              <Link to={`/detail/` + movie.type}>
+              <Link to={`/detail/${movie.type}/${key}`}>
                 <img src={movie.cardImg} alt={movie.title} />
               </Link>
             </Wrap>

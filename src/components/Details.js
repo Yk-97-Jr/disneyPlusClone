@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import db from "../firebase";
-import { collection, doc, getDoc } from "firebase/firestore/lite";
+import { doc, getDoc } from "firebase/firestore/lite";
 
 const Detail = () => {
-  const { id } = useParams();
-  const [detailData, setDetailData] = useState({});
-  const [selectedMovieIndex, setSelectedMovieIndex] = useState(1);
+  const { id, key } = useParams();
 
+  const [detailData, setDetailData] = useState({});
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,24 +28,22 @@ const Detail = () => {
   }, [id, setDetailData]); // Added setDetailData as a dependency
 
   // Logging detailData inside the component
-  console.log("detail Data in use effect  🔥 ", detailData);
 
   return (
     <Container>
       {detailData.movies && detailData.movies.length > 0 && (
-        
         <>
           <Background>
             <img
-              alt={detailData.movies[selectedMovieIndex].title}
-              src={detailData.movies[selectedMovieIndex].backgroundImg}
+              alt={detailData.movies[key].title}
+              src={detailData.movies[key].backgroundImg}
             />
           </Background>
 
           <ImageTitle>
             <img
-              alt={detailData.movies[selectedMovieIndex].title}
-              src={detailData.movies[selectedMovieIndex].titleImg}
+              alt={detailData.movies[key].title}
+              src={detailData.movies[key].titleImg}
             />
           </ImageTitle>
           <ContentMeta>
@@ -69,12 +66,8 @@ const Detail = () => {
                 </div>
               </GroupWatch>
             </Controls>
-            <SubTitle>
-              {detailData.movies[selectedMovieIndex].subTitle}
-            </SubTitle>
-            <Description>
-              {detailData.movies[selectedMovieIndex].description}
-            </Description>
+            <SubTitle>{detailData.movies[key].subTitle}</SubTitle>
+            <Description>{detailData.movies[key].description}</Description>
           </ContentMeta>
         </>
       )}
