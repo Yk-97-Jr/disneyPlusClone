@@ -6,6 +6,7 @@ import Recommends from "./Recommends";
 import Trending from "./Trending";
 import Viewers from "./Viewers";
 import { useEffect } from "react";
+
 import { useDispatch } from "react-redux";
 
 import { getCategoriesAndDocuments } from "../firebase"; // Import your function to fetch data

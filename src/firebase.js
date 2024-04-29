@@ -3,11 +3,9 @@ import { getFirestore } from "firebase/firestore/lite";
 import { GoogleAuthProvider } from "firebase/auth"; // Note: Import GoogleAuthProvider directly
 import { getAuth } from "firebase/auth"; // Import getAuth to get the auth instance
 import { getStorage } from "firebase/storage";
-import firebase from "firebase/app";
+
 import {
   doc,
-  getDoc,
-  setDoc,
   collection,
   writeBatch,
   query,
