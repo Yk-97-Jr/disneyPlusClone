@@ -1,7 +1,7 @@
 # Disney+ Front End clone made with React JS ![image](https://camo.githubusercontent.com/6082984371dec876f37ab7caa49e14c2e4ad955f521494ec3d76e6843539eedd/68747470733a2f2f636e626c2d63646e2e62616d677269642e636f6d2f6173736574732f633061323634383831663666323639343835643934323238663839303465613164346238623032623864613064666161636363363565653732333538326539612f6f726967696e616c)
 
 H! This a Disney+ front end clone that i´ve built using ReactJS.  
-**You can visit the website clicking [here!](https://../)**
+**You can visit the website clicking [here!](https://disneyplus-f7007.firebaseapp.com/)**
 
 ##### I dont own any rights from Disney as a company, this platform was made for educational purposes and to be shown as a piece of portfolio. There are not any commercial or monetary purposes.
 
@@ -16,7 +16,7 @@ H! This a Disney+ front end clone that i´ve built using ReactJS.
 
 - Clone the project
 - Execute _npm install_ command
-- Edit the _.env.example_ file with your  Movie DB api key
+- Edit the _.env.example_ file with your Movie DB api key
 - Execute _npm start_
 - Done :)
 
